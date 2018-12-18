@@ -22,12 +22,40 @@ public class C2Number {
     private static List<String> units = createUnit();
     //
     private static Map<String, Long> unitMap = createUnitMap();
+
+    public static long convert(String text) {
+        long value = 0L;
+        int index = text.indexOf("亿");
+        if (index != -1) {
+            String[] yiArray = text.split("亿");
+            String yi = yiArray[0];
+            value += C2Number.convert_v2(yi) * 100000000L;
+            if (yiArray.length == 1) {
+                return value;
+            }
+            text = yiArray[1];
+        }
+        index = text.indexOf("万");
+        if (index != -1) {
+            String[] yiArray = text.split("万");
+            String yi = yiArray[0];
+            value += C2Number.convert_v2(yi) * 10000L;
+            if (yiArray.length == 1) {
+                return value;
+            }
+            text = yiArray[1];
+        }
+        value += C2Number.convert_v2(text);
+        return value;
+    }
+
     /**
      * 算法有问题，改进一下，好像可以了
+     *
      * @param cnumber
-     * @return 
+     * @return
      */
-    public static long convert(String cnumber) {
+    private static long convert_v2(String cnumber) {
         String[] arrays = cnumber.split("〇");
         long number = 0;
         for (String item : arrays) {
@@ -148,5 +176,5 @@ public class C2Number {
         map.put("千", 1000L);
         return map;
     }
- 
+
 }
