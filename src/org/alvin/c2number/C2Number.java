@@ -22,13 +22,26 @@ public class C2Number {
     private static List<String> units = createUnit();
     //
     private static Map<String, Long> unitMap = createUnitMap();
+    /**
+     * 算法有问题，改进一下，好像可以了
+     * @param cnumber
+     * @return 
+     */
+    public static long convert(String cnumber) {
+        String[] arrays = cnumber.split("〇");
+        long number = 0;
+        for (String item : arrays) {
+            number += Long.valueOf(chinese2Num(item));
+        }
+        return number;
+    }
 
-    public static String chinese2Num(String numberText) {
+    private static String chinese2Num(String numberText) {
         long value = 0L;
         for (Map.Entry<String, Long> entry : unitMap.entrySet()) {
             String[] numberArray = numberText.split(entry.getKey());
             if (numberArray.length == 2) {
-                String tempPrefix = convert(numberArray[0]);
+                String tempPrefix = doConvert(numberArray[0]);
                 if (tempPrefix != null && tempPrefix.matches("\\d+")) {
                     value += Long.parseLong(tempPrefix) * entry.getValue();
                 }
@@ -40,7 +53,7 @@ public class C2Number {
                 for (int i = units.size() - 1; i >= 0; i--) {
                     if (tempPrefix.endsWith(units.get(i))) {
                         tempPrefix = numberText.replace(units.get(i), "");
-                        tempPrefix = convert(numberText);
+                        tempPrefix = doConvert(numberText);
                     }
                 }
                 try {
@@ -52,7 +65,7 @@ public class C2Number {
                 break;
             }
         }
-        String tempPrefix = convert(numberText);
+        String tempPrefix = doConvert(numberText);
         if (tempPrefix != null && tempPrefix.matches("\\d+")) {
             value += Long.parseLong(tempPrefix);
         }
@@ -65,7 +78,7 @@ public class C2Number {
      * @param numberText
      * @return
      */
-    private static String convert(String numberText) {
+    private static String doConvert(String numberText) {
         while ((numberText.length() > 1 && numberText.startsWith("〇"))) {
             numberText = numberText.substring(1);
         }
@@ -135,5 +148,5 @@ public class C2Number {
         map.put("千", 1000L);
         return map;
     }
-
+ 
 }
