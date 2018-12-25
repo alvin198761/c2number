@@ -10,7 +10,7 @@ package org.alvin.c2number;
  *
  * @author alvin
  */
-public class C2Number_v2 {
+public class C2Number_Test {
 
     public static void main(String[] args) {
         String text = "一亿四千三百二十五万二千一百五十四";
@@ -25,9 +25,9 @@ public class C2Number_v2 {
         System.out.println(C2Number.convert(text));
         text = "三千万";
         System.out.println(C2Number.convert(text));
-        text = "八十";
+        text = "八百〇一";
         System.out.println(C2Number.convert(text));
-        text = "一千〇五亿";
+        text = "一千八百〇一亿〇五";
         System.out.println(C2Number.convert(text));
     }
 
